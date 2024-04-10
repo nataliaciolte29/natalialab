@@ -1,84 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cookie Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 9-10</title>
 </head>
 <body>
-<p>Hello world!</p>
-<button onclick="alertCookie()">Show Cookies</button>
- 
-<h1>Cookie Examples</h1>
+    <h1>Laborator Natalia</h1>
+    
+    <button onclick="alertCookie()">Afiseaza cookie-urile</button>
+    <button onclick="setCookie()">Seteaza cookie-uri inițiale</button>
+    <button onclick="alert(showCookies())">Arata cookie-uri</button>
+    <button onclick="alert(clearCookies())">Curata cookie-uri</button>
+    <button onclick="resetOnce()">Reseteaza doSomethingOnlyOnce</button>
+    <button onclick="alert(checkACookieExists())">Verifica existenta cookie-ului reader</button>
+    <button onclick="alert(checkCookieHasASpecificValue())">Verifica valoarea cookie-ului reader</button>
 
-<h2>Setting a Cookie</h2>
-<button onclick="setCookie()">Set Cookie</button>
+    <script>
+        document.cookie = "session=test GDPR; path=/; SameSite=Lax; Secure";
+        document.cookie = "favorite_task=collect Data; path=/; SameSite=Lax; Secure";
 
-<h2>Displaying All Cookies</h2>
-<button onclick="showCookies()">Show Cookies</button>
-
-<h2>Deleting a Cookie</h2>
-<button id="output" onclick="deleteCookie()">Delete Cookie</button>
-
-<h2>Modifying a Cookie</h2>
-<button onclick="modifyCookie()">Modify Cookie</button>
-
-<h2>Expiring a Cookie After a Time Interval</h2>
-<button onclick="expireCookie()">Expire Cookie After Time Interval</button>
-
-<h2>Checking if a Cookie Exists</h2>
-<button onclick="checkCookie('username')">Check if Username Cookie Exists</button>
-
-<script>
-    // Setting a cookie
-    function setCookie() {
-        document.cookie = "username=John Doe";
-        alert("Cookie 'username' has been set!");
-    }
-
-    // Displaying all cookies
-    function showCookies() {
-        alert("Cookies are: " + document.cookie);
-    }
-
-    // Deleting a cookie
-    function deleteCookie() {
-        document.getElementById("output").textContent = "";
-        alert("Cookie 'username' has been deleted!");
-    }
-
-    // Modifying a cookie
-    function modifyCookie() {
-        document.cookie = "username=Jane Doe";
-        alert("Cookie 'username' has been modified!");
-    }
-
-    // Expiring a cookie after a time interval
-    function expireCookie() {
-        var d = new Date();
-        d.setTime(d.getTime() + (1 * 60 * 1000)); // expires in 1 minute
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = "username=John Doe; " + expires + "; path=/;";
-        alert("Cookie 'username' will expire in 1 minute!");
-    }
-
-    // Checking if a cookie exists
-    function checkCookie(cookieName) {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.indexOf(cookieName) === 0) {
-                alert("Cookie '" + cookieName + "' exists!");
-                return;
-            }
+        function alertCookie() {
+            alert(document.cookie); 
         }
-        alert("Cookie '" + cookieName + "' does not exist!");
-    }
 
-    // Displaying a specific cookie
-    function alertCookie() {
-        alert(document.cookie);
-    }
-</script>
+        function setCookie() {
+            document.cookie = "name=oeschger; SameSite=None; Secure";
+            document.cookie = "favorite_food=tripe; SameSite=None; Secure";
+            document.cookie = "test1=Hello; SameSite=None; Secure";
+            document.cookie = "test2=World; SameSite=None; Secure";
+            document.cookie = "reader=1; SameSite=None; Secure";
+            document.cookie = "doSomethingOnlyOnce=true; expires=Fri, 01 Jan 1970 00:00:00 GMT; SameSite=None; Secure";
+            alert('Cookies set!'); 
+        }
+
+        function showCookies() {
+            return 'Cookies: ' + document.cookie;
+        }
+
+        function clearCookies() {
+            return 'Cookies cleared!';
+        }
+
+        function resetOnce() {
+            document.cookie = "doSomethingOnlyOnce=; expires=Thu, 1 Jan 1970 00:00:00 GMT; SameSite=None; Secure";
+            alert('Reset doSomethingOnlyOnce cookie!');
+        }
+
+        function checkACookieExists() {
+            return document.cookie.split("; ").some((item) => item.trim().startsWith("reader=")) ?
+                'The cookie "reader" exists' : 'The cookie "reader" does not exist';
+        }
+
+        function checkCookieHasASpecificValue() {
+            return document.cookie.split("; ").some((item) => item.includes("reader=1")) ?
+                'The cookie "reader" has a value of "1"' : 'The cookie "reader" does not have the value "1"';
+        }
+    </script>
 </body>
 </html>
